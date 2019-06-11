@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yaocj.dal.StudentDAO">
+  <resultMap id="BaseResultMap" type="com.yaocj.dal.model.StudentDO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="teacher_name" jdbcType="VARCHAR" property="teacherName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, update_time, name, sex, address, age, teacher_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from student
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from student
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByTeacherName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where teacher_name = #{teacherName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByName" parameterType="java.lang.String">
+    delete from student
+    where name = #{name,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByTeacherName" parameterType="java.lang.String">
+    delete from student
+    where teacher_name = #{teacherName,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yaocj.dal.model.StudentDO">
+    insert into student (id, create_time, update_time, 
+      name, sex, address, age,
+      teacher_name)
+    values
+    <foreach collection="studentDOList" item="item" index="index" separator=",">
+      (#{item.id,jdbcType=INTEGER}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP},
+      #{item.name,jdbcType=VARCHAR}, #{item.sex,jdbcType=VARCHAR}, #{item.address,jdbcType=VARCHAR}, #{item.age,jdbcType=INTEGER},
+      #{item.teacherName,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yaocj.dal.model.StudentDO">
+    update student
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null">
+        teacher_name = #{teacherName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateTeacherName">
+    update student
+    set teacher_name = #{name2,jdbcType=VARCHAR}
+    where teacher_name = #{name1,jdbcType=VARCHAR}
+  </update>
+</mapper>
