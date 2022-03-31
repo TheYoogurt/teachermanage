@@ -12,7 +12,7 @@
         <appname>teachermanage</appname>
         <appname.project.version>1.0-SNAPSHOT</appname.project.version>
         <appname.api.version>1.0-SNAPSHOT</appname.api.version>
-        <spring.boot.version>2.0.3.RELEASE</spring.boot.version>
+        <spring.boot.version>2.5.12</spring.boot.version>
         <spring.boot.mybatis.version>1.3.0</spring.boot.mybatis.version>
         <com.github.pagehelper.version>5.1.4</com.github.pagehelper.version>
         <spring.boot.test.version>1.5.3.RELEASE</spring.boot.test.version>
